@@ -46,7 +46,12 @@ INSTALLED_APPS = [
     'notifications.apps.NotificationsConfig',
     'ad_links.apps.AdLinksConfig',
     'backup.apps.BackupConfig',
-    'reservations_admin.apps.ReservationsAdminConfig'
+    'reservations_admin.apps.ReservationsAdminConfig',
+    'site_statistics',
+    'change',
+    'notification',
+    'settings_publication',
+    'user_data'
 ]
 
 MIDDLEWARE = [

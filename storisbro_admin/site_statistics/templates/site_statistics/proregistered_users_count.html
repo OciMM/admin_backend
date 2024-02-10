@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Users Count</title>
+</head>
+<body>
+    <h1>Registered Users Count</h1>
+    
+    <p>Total Registered Users: {{ user_count }}</p>
+    <p>Total Owners: {{ owners_count }}</p>
+    <p>Total Clients: {{ clients_count }}</p>
+    <p>Total Visits: {{ total_visits }}</p>
+    <p>Refill Transactions: {{ refill_transactions.count }}</p>
+    <p>Withdrawal Transactions: {{ withdrawal_transactions.count }}</p>
+    <p>Admins Earnings: {{ admins_earnings }}</p>
+    <p>Creative Uploads: {{ creative_uploads }}</p>
+    <p>Community Uploads: {{ community_uploads }}</p>
+    <p>Story Views: {{ story_views }}</p>
+    <p>Total Error Count: {{ total_error_count }}</p>
+
+    <!-- Кнопка для выгрузки в Excel -->
+    <form action="{% url 'generate_excel_file' %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Export to Excel</button>
+    </form>
+</body>
+</html>
