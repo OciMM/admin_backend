@@ -16,10 +16,6 @@ class CreateZIPScript(APIView):
         except Exception as e:
             return Response({'Ошибка': 'Функция не выполняется'})
         
-# class GetZIPScript(APIView):
-#     def get(self, request):
-#         response = create_zip_of_django_project("C:\Admin_Backend_Storisbro\storisbro_admin\django_project.zip")
-#         return response
 
 class GetZIPDataBase(APIView):
     def get(self, request):

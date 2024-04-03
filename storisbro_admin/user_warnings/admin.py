@@ -1,9 +1,6 @@
 from django.contrib import admin
-from .models import GetFullUserModel, WarningToUser, CustomUser
+# from .models import WarningToUser, CustomUser
 
-@admin.register(GetFullUserModel)
-class GetFullUserModel(admin.ModelAdmin):
-    list_display = ['id']
     
-admin.site.register(WarningToUser)
-admin.site.register(CustomUser)
+# admin.site.register(WarningToUser)
+# admin.site.register(CustomUser)

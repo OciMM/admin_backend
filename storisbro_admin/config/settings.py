@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:3001'
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 # Application definition
 
@@ -39,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'corsheaders',
+    'django_otp',
+    'django_otp.plugins.otp_totp',
 
     'creatives_admin.apps.CreativesAdminConfig',
     'communities_admin.apps.CommunitiesAdminConfig',
@@ -51,8 +60,10 @@ INSTALLED_APPS = [
     'change',
     'notification',
     'settings_publication',
-    'user_data'
+    'user_data',
+    'authentication_admin.apps.AuthenticationAdminConfig'
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,9 +73,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django_otp.middleware.OTPMiddleware',
 
-    'user_warnings.middleware.CheckBlockedStatusMiddleware'
+    # 'user_warnings.middleware.CheckBlockedStatusMiddleware'
+    'authentication_admin.middleware.AllowIPMiddleware'
 ]
+
+# ALLOWED_IPS = ['193.186.4.54']
 
 ROOT_URLCONF = 'config.urls'
 
@@ -84,7 +100,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'config.wsgi.application'
+# WSGI_APPLICATION = 'config.wsgi.application'
 
 
 # Database
@@ -92,8 +108,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Storisbro_admin_db',
+        'USER': 'Storisbro_admin_login',
+        'PASSWORD': 'Bz45KqEECzGRNKohUA4F',
+        'HOST': 'localhost',
+        'PORT': 5432
     }
 }
 
@@ -116,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'user_warnings.CustomUser'
+# AUTH_USER_MODEL = 'user_warnings.CustomUser'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -129,7 +149,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+# AUTH_USER_MODEL = 'user_warnings.CustomUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
