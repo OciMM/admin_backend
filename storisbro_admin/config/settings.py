@@ -109,8 +109,8 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Storisbro_admin_db',
-        'USER': 'Storisbro_admin_login',
+        'NAME': 'admin_db',
+        'USER': 'admin_login',
         'PASSWORD': 'Bz45KqEECzGRNKohUA4F',
         'HOST': 'localhost',
         'PORT': 5432
