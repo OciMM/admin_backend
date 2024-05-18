@@ -170,12 +170,16 @@ EMAIL_HOST_PASSWORD = 'jhwy sfwp efkj qdjz'  # Укажите пароль от 
 EMAIL_USE_TLS = True
 
 
-CELERY_BROKER_URL = 'pyamqp://guest:guest@localhost:5672//'
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Moscow'
 
-CELERY_RESULT_BACKEND = 'rpc://'
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
+
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 #CELERY BEAT
