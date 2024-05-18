@@ -47,11 +47,11 @@ urlpatterns = [
     path('api/cm/<int:pk>', CheckCommunityAPIView.as_view()),
     path('api/settings_site', ChangeSettingsAPIView.as_view()),
     path('api/settings_site/<int:pk>', ChangeSettingsAPIViewPK.as_view()),
-    path('n', AutoNotificationModelAPIView.as_view()),
-    path('n/<int:pk>', PK_AutoNotificationModelAPIView.as_view()),
+    path('api/n', AutoNotificationModelAPIView.as_view()),
+    path('api/n/<int:pk>', PK_AutoNotificationModelAPIView.as_view()),
     path('api/ad_links', AdLinkModelAPIView.as_view()),
-    path('ad-links/<str:link>', AdLinkClickView.as_view()),
-    path('z', CreateZIPScript.as_view()),
-    path('db', GetZIPDataBase.as_view()),
-    path('reservations/<int:pk>', GetReservationAPIView.as_view())
+    path('api/ad-links/<str:link>', AdLinkClickView.as_view()),
+    path('api/z', CreateZIPScript.as_view()),
+    path('api/db', GetZIPDataBase.as_view()),
+    path('api/reservations/<int:pk>', GetReservationAPIView.as_view())
 ]
