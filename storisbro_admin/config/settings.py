@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['62.113.96.70']
 
 CORS_ALLOWED_ORIGINS = [
     'http://62.113.96.70',
-    'http://localhost:3001'
+    'http://31.129.96.225'
 ]
 
 CORS_ALLOW_CREDENTIALS = True

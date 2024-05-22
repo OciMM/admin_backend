@@ -7,7 +7,7 @@ import requests
 class CheckAllAdminCommunitiesListAPIView(APIView):
     def get(self, request, *args, **kwargs):
         # URL для получения данных из API проекта №1
-        url_project1_api = 'http://127.0.0.1:8000/api_communities/communities'
+        url_project1_api = 'http://31.129.96.225/api_communities/communities'
 
         # Отправка GET запроса к API проекта №1
         response = requests.get(url_project1_api)
