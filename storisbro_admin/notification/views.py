@@ -65,9 +65,13 @@ class NotificationToUserAPIView(APIView):
             user = HistoryNotifications.objects.get(UID=UID)
 
             """Отправка сообщений через лк"""
-            if message_to_user:
+            if message_to_user == "true":
                 # Получаем данные для обновления из запроса
-                data_to_update = request.data
+                data_to_update = {
+                    "UID": UID,
+                    "title": request.data.title,
+                    "message": request.data.text,
+                }
 
                 # URL для отправки PATCH запроса к API проекта №1 с использованием pk из URL
                 url_project1_api = f'http://31.129.96.225/api/notification/send-notification/{UID}/'  # Пример URL для обновления объекта с определенным id
@@ -91,7 +95,7 @@ class NotificationToUserAPIView(APIView):
                 else:
                     return None
                 
-            if message_to_vk:
+            if message_to_vk == "true":
                 # Отправляем сообщение в VK
                 account_vk = get_vk_id_from_project1(UID)
                 message_text = data.get('text')
@@ -108,7 +112,7 @@ class NotificationToUserAPIView(APIView):
                 else:
                     return None
                 
-            if message_to_email:
+            if message_to_email == "true":
                 # Отправляем сообщение по электронной почте
                 message_text = data.get('text')
                 message_email = get_email_from_project1(UID)

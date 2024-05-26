@@ -13,16 +13,16 @@ class Notification(models.Model):
     def __str__(self):
         return self.subject
 
-class StatusNotification(models.Model):
-    status = models.CharField(max_length=50, verbose_name="Статус уведомления")
+# class StatusNotification(models.Model):
+#     status = models.CharField(max_length=50, verbose_name="Статус уведомления")
 
 class HistoryNotifications(models.Model):
     UID = models.CharField(max_length=150, verbose_name="UID пользователя")
     title = models.CharField(max_length=250, verbose_name="Тема уведомления", null=True)
     text = models.TextField(verbose_name="Содержание уведомления")
     created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    start = models.DateTimeField(verbose_name="Дата отправки")
-    status = models.ForeignKey(StatusNotification, on_delete=models.CASCADE)
+    start = models.DateTimeField(verbose_name="Дата отправки", blank=True)
+    # status = models.ForeignKey(StatusNotification, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.UID
