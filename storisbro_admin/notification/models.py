@@ -21,7 +21,7 @@ class HistoryNotifications(models.Model):
     text = models.TextField(verbose_name="Содержание уведомления")
     created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
     start = models.DateTimeField(verbose_name="Дата отправки")
-    status = models.ForeignKey(StatusNotification)
+    status = models.ForeignKey(StatusNotification, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.UID
