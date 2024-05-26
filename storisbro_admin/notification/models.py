@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils import timezone
 
 class Notification(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     subject = models.CharField(max_length=255)
     message = models.TextField()
     attachments = models.FileField(upload_to='attachments/', blank=True, null=True)
