@@ -23,7 +23,6 @@ class HistoryNotifications(models.Model):
     created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
     # start = models.DateTimeField(verbose_name="Дата отправки", blank=True)
     # status = models.ForeignKey(StatusNotification, on_delete=models.CASCADE)
-    #СДЕЛАЙ МИГРАЦИИ НА СЕРВЕРЕ!!!
 
     def __str__(self):
         return self.UID
