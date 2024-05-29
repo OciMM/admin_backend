@@ -69,8 +69,8 @@ class NotificationToUserAPIView(APIView):
                 # Получаем данные для обновления из запроса
                 data_to_update = {
                     "UID": UID,
-                    "title": request.data.title,
-                    "message": request.data.text,
+                    "title": request.data['title'],
+                    "message": request.data['text'],
                 }
 
                 # URL для отправки PATCH запроса к API проекта №1 с использованием pk из URL
