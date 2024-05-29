@@ -39,9 +39,17 @@ def send_notification(request):
 
 
 class NotificationToUserAPIView(APIView):
-    def get(self, request):
+    def get(self, 
+            request,
+            message_to_user, 
+            message_to_vk, 
+            message_to_email, 
+            *args, 
+            **kwargs
+        ):
         notification_model = HistoryNotifications.objects.all()
         serializer = HistoryNotificationsSerializer(notification_model, many=True)
+        
         return Response(serializer.data)
     
     def post(
@@ -62,7 +70,7 @@ class NotificationToUserAPIView(APIView):
 
             # Получаем пользователя по предоставленному ID
             UID = data.get('UID')  # Предполагается, что user_id передается в запросе
-            user = HistoryNotifications.objects.get(UID=UID)
+            # user = HistoryNotifications.objects.get(UID=UID)
 
             """Отправка сообщений через лк"""
             if message_to_user == "true":
