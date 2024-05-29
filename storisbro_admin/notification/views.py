@@ -39,14 +39,7 @@ def send_notification(request):
 
 
 class NotificationToUserAPIView(APIView):
-    def get(self, 
-            request,
-            message_to_user, 
-            message_to_vk, 
-            message_to_email, 
-            *args, 
-            **kwargs
-        ):
+    def get(self, request,):
         notification_model = HistoryNotifications.objects.all()
         serializer = HistoryNotificationsSerializer(notification_model, many=True)
         
