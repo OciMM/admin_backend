@@ -102,6 +102,18 @@ class NotificationToUserAPIView(APIView):
                 # Отправка POST запроса к API проекта №1
                 response = requests.post(url_project1_api, data=data_to_update)
 
+                if message_to_vk == "true":
+                    # Отправляем сообщение в VK
+                    account_vk = get_vk_id_from_project1(UID)
+                    message_text = data.get('text')
+                    send_message_vk(account_vk, message_text)
+
+                if message_to_email == "true":
+                    # Отправляем сообщение по электронной почте
+                    message_text = data.get('text')
+                    message_email = get_email_from_project1(UID)
+                    send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+
                 if response.status_code == 200:
                     # Если запрос успешен, возвращаем сообщение об успешном обновлении
                     return Response({'message': f'Data updated successfully for object with id={UID} in Project 1'})
@@ -115,11 +127,18 @@ class NotificationToUserAPIView(APIView):
                 message_text = data.get('text')
                 send_message_vk(account_vk, message_text)
 
+                if message_to_email == "true":
+                    # Отправляем сообщение по электронной почте
+                    message_text = data.get('text')
+                    message_email = get_email_from_project1(UID)
+                    send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+            
             elif message_to_email == "true":
                 # Отправляем сообщение по электронной почте
                 message_text = data.get('text')
                 message_email = get_email_from_project1(UID)
                 send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+
 
             return Response({"message": "Данные успешно обработаны"}, status=status.HTTP_200_OK)
             
