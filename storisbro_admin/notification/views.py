@@ -69,8 +69,23 @@ class NotificationToUserAPIView(APIView):
             serializer.save()
 
             # Получаем пользователя по предоставленному ID
-            UID = data.get('UID')  # Предполагается, что user_id передается в запросе
-            # user = HistoryNotifications.objects.get(UID=UID)
+            UID = data.get('UID')  # Предполагается, что UID передается в запросе
+
+            def get_vk_id_from_project1(uid):
+                url = f'http://31.129.96.225/api/notification/send-notification/vk_and_email/{uid}/'
+                response = requests.get(url)
+                if response.status_code == 200:
+                    return response.json().get('vk_id')
+                else:
+                    return None
+
+            def get_email_from_project1(uid):
+                url = f'http://31.129.96.225/api/notification/send-notification/vk_and_email/{uid}/'
+                response = requests.get(url)
+                if response.status_code == 200:
+                    return response.json().get('email')
+                else:
+                    return None
 
             """Отправка сообщений через лк"""
             if message_to_user == "true":
@@ -81,26 +96,11 @@ class NotificationToUserAPIView(APIView):
                     "message": request.data['text'],
                 }
 
-                # URL для отправки PATCH запроса к API проекта №1 с использованием pk из URL
+                # URL для отправки POST запроса к API проекта №1 с использованием pk из URL
                 url_project1_api = f'http://31.129.96.225/api/notification/send-notification/message/'  # Пример URL для обновления объекта с определенным id
 
-                # Отправка PATCH запроса к API проекта №1
+                # Отправка POST запроса к API проекта №1
                 response = requests.post(url_project1_api, data=data_to_update)
-
-                def get_vk_id_from_project1(uid):
-                    url = f'http://31.129.96.225/api/notification/send-notification/vk_and_email/{uid}/'
-                    response = requests.get(url)
-                    if response.status_code == 200:
-                        return response.json().get('vk_id')
-                    else:
-                        return None
-                
-                if message_to_vk == "true":
-                    # Отправляем сообщение в VK
-                    account_vk = get_vk_id_from_project1(UID)
-                    message_text = data.get('text')
-                    # account_vk = user.account_vk
-                    send_message_vk(account_vk, message_text)
 
                 if response.status_code == 200:
                     # Если запрос успешен, возвращаем сообщение об успешном обновлении
@@ -109,33 +109,13 @@ class NotificationToUserAPIView(APIView):
                     # Если возникла ошибка, возвращаем соответствующий ответ
                     return Response({'error': f'Failed to update data for object with id={UID} in Project 1'}, status=status.HTTP_400_BAD_REQUEST)
             
-            """Отправка сообщений через вк"""
-            def get_vk_id_from_project1(uid):
-                url = f'http://31.129.96.225/api/notification/send-notification/vk_and_email/{uid}/'
-                response = requests.get(url)
-                if response.status_code == 200:
-                    return response.json().get('vk_id')
-                else:
-                    return None
-                
-            if message_to_vk == "true":
+            elif message_to_vk == "true":
                 # Отправляем сообщение в VK
                 account_vk = get_vk_id_from_project1(UID)
                 message_text = data.get('text')
-                # account_vk = user.account_vk
                 send_message_vk(account_vk, message_text)
 
-
-            """Отправка сообщений через email"""
-            def get_email_from_project1(uid):
-                url = f'http://31.129.96.225/api/notification/send-notification/vk_and_email/{uid}/'
-                response = requests.get(url)
-                if response.status_code == 200:
-                    return response.json().get('email')
-                else:
-                    return None
-                
-            if message_to_email == "true":
+            elif message_to_email == "true":
                 # Отправляем сообщение по электронной почте
                 message_text = data.get('text')
                 message_email = get_email_from_project1(UID)
@@ -143,5 +123,4 @@ class NotificationToUserAPIView(APIView):
 
             return Response({"message": "Данные успешно обработаны"}, status=status.HTTP_200_OK)
             
-        
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
