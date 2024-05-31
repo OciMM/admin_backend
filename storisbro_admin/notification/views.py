@@ -76,7 +76,7 @@ class NotificationToUserAPIView(APIView):
             if message_to_user == "true":
                 # Получаем данные для обновления из запроса
                 data_to_update = {
-                    "UID": UID,
+                    "user": UID,
                     "title": request.data['title'],
                     "message": request.data['text'],
                 }
@@ -86,6 +86,21 @@ class NotificationToUserAPIView(APIView):
 
                 # Отправка PATCH запроса к API проекта №1
                 response = requests.post(url_project1_api, data=data_to_update)
+
+                def get_vk_id_from_project1(uid):
+                    url = f'http://31.129.96.225/api/notification/send-notification/vk_and_email/{uid}/'
+                    response = requests.get(url)
+                    if response.status_code == 200:
+                        return response.json().get('vk_id')
+                    else:
+                        return None
+                
+                if message_to_vk == "true":
+                    # Отправляем сообщение в VK
+                    account_vk = get_vk_id_from_project1(UID)
+                    message_text = data.get('text')
+                    # account_vk = user.account_vk
+                    send_message_vk(account_vk, message_text)
 
                 if response.status_code == 200:
                     # Если запрос успешен, возвращаем сообщение об успешном обновлении
