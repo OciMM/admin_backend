@@ -39,7 +39,14 @@ def send_notification(request):
 
 
 class NotificationToUserAPIView(APIView):
-    def get(self, request,):
+    def get(self, 
+            request,
+            message_to_user, 
+            message_to_vk, 
+            message_to_email, 
+            *args, 
+            **kwargs
+        ):
         notification_model = HistoryNotifications.objects.all()
         serializer = HistoryNotificationsSerializer(notification_model, many=True)
         
@@ -75,7 +82,7 @@ class NotificationToUserAPIView(APIView):
                 }
 
                 # URL для отправки PATCH запроса к API проекта №1 с использованием pk из URL
-                url_project1_api = f'http://31.129.96.225/api/notification/send-notification/{UID}/'  # Пример URL для обновления объекта с определенным id
+                url_project1_api = f'http://31.129.96.225/api/notification/send-notification/message/'  # Пример URL для обновления объекта с определенным id
 
                 # Отправка PATCH запроса к API проекта №1
                 response = requests.post(url_project1_api, data=data_to_update)
