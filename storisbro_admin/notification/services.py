@@ -2,6 +2,7 @@ import random
 import string
 import vk_api
 import time
+import requests
 
 from django.core.mail import send_mail
 
@@ -42,6 +43,16 @@ def send_message_email(email, text):
     email_sender = 'bekasovmaks20@gmail.com'
     
     send_mail(subject, message, email_sender, [email_receiver])
+
+
+# Отправка сообщений на все почты:
+def get_email_from_project1():
+        url = f'http://31.129.96.225/api/notification/send-notification/get_users/'
+        response = requests.get(url)
+        if response.status_code == 200:
+            return response.json().get('email')
+        else:
+            return None
 
 
 # # Отправка сообщений для всех в VK
