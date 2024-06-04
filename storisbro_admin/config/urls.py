@@ -44,6 +44,7 @@ urlpatterns = [
     # path('dadmin/', admin.site.urls),
     path('api/all_creatives', CheckAllAdminCreativesListAPIView.as_view()),
     path('api/send_notification/<str:message_to_user>/<str:message_to_vk>/<str:message_to_email>/', NotificationToUserAPIView.as_view()),
+    # path('api/send_notification/all/<str:message_to_user>/<str:message_to_vk>/<str:message_to_email>/', NotificationToUserAPIView.as_view()),
     path('api/check_creative/<str:type_creative>/<int:pk>', CheckCreativesAPIView.as_view()),
     path('api/cm', CheckAllAdminCommunitiesListAPIView.as_view()),
     path('api/cm/<int:pk>', CheckCommunityAPIView.as_view()),
