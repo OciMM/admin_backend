@@ -49,10 +49,28 @@ def send_message_email(email, text):
 def get_email_from_project1():
         url = f'http://31.129.96.225/api/notification/send-notification/get_users/'
         response = requests.get(url)
+        email_list = []
         if response.status_code == 200:
-            return response.json().get('email')
+            response_list = response.json()
+            for i in response_list:
+                email_list.append(i['email'])
+            return email_list
         else:
             return None
+
+
+def send_message_for_all_email(text):
+    subject = 'Предупреждение'
+    message = text
+    email_sender = 'bekasovmaks20@gmail.com'
+
+    list_email = get_email_from_project1()
+
+    for email_receiver in list_email:  
+        send_mail(subject, message, email_sender, [email_receiver])
+
+send_message_for_all_email("Привет!")
+
 
 
 # # Отправка сообщений для всех в VK

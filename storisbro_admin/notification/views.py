@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import HistoryNotifications
 from .serializers import HistoryNotificationsSerializer
-from .services import send_message_email, send_message_vk
+from .services import send_message_email, send_message_vk, send_message_for_all_email
 import requests
 
 # какая то функция
@@ -160,11 +160,10 @@ class NotificationToUserAPIView(APIView):
                 #         message_email = get_email_from_project1(UID)
                 #         send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
                 
-                # elif message_to_email == "true":
-                #     # Отправляем сообщение по электронной почте
-                #     message_text = data.get('text')
-                #     message_email = get_email_from_project1(UID)
-                #     send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+                elif message_to_email == "true":
+                    # Отправляем сообщение по электронной почте
+                    message_text = data.get('text')
+                    send_message_for_all_email(message_text)  # Здесь вызываем вашу функцию отправки почты
 
                 return Response({"message": "Данные успешно обработаны (Для всех)"}, status=status.HTTP_200_OK)
                 
