@@ -1,6 +1,7 @@
 import random
 import string
 import vk_api
+import time
 
 from django.core.mail import send_mail
 
@@ -43,3 +44,32 @@ def send_message_email(email, text):
     send_mail(subject, message, email_sender, [email_receiver])
 
 
+# # Отправка сообщений для всех в VK
+# def get_group_members(group_id):
+#     session = vk_api.VkApi(token=TOKEN_GROUP)
+#     vk = session.get_api()
+
+#     members = []
+#     offset = 0
+
+#     while True:
+#         response = vk.groups.getMembers(group_id=group_id, offset=offset)
+#         members.extend(response['items'])
+
+#         if offset + 1000 >= response['count']:
+#             break
+
+#         offset += 1000
+#         time.sleep(0.34)  # Ограничение на количество запросов в секунду
+
+#     return members
+
+# def send_message_to_all_members(group_id, message_text):
+#     members = get_group_members(group_id)
+#     for member_id in members:
+#         send_message_vk(user_id=member_id, message_text=message_text)
+#         time.sleep(0.34)  # Ограничение на количество запросов в секунду
+
+# # Использование:
+# message_text = "Cообщение всем подписчикам группы"
+# send_message_to_all_members("club224176416", message_text)
