@@ -150,7 +150,6 @@ class NotificationToUserAPIView(APIView):
                 if message_to_user == "true":
                     # Получаем данные для обновления из запроса
                     data_to_update = {
-                        "user": UID,
                         "title": request.data['title'],
                         "message": request.data['text'],
                     }
@@ -161,17 +160,17 @@ class NotificationToUserAPIView(APIView):
                     # Отправка POST запроса к API проекта №1
                     response = requests.post(url_project1_api, data=data_to_update)
 
-                    if message_to_vk == "true":
-                        # Отправляем сообщение в VK
-                        account_vk = get_vk_id_from_project1(UID)
-                        message_text = data.get('text')
-                        send_message_vk(account_vk, message_text)
+                    # if message_to_vk == "true":
+                    #     # Отправляем сообщение в VK
+                    #     account_vk = get_vk_id_from_project1(UID)
+                    #     message_text = data.get('text')
+                    #     send_message_vk(account_vk, message_text)
 
-                    if message_to_email == "true":
-                        # Отправляем сообщение по электронной почте
-                        message_text = data.get('text')
-                        message_email = get_email_from_project1(UID)
-                        send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+                    # if message_to_email == "true":
+                    #     # Отправляем сообщение по электронной почте
+                    #     message_text = data.get('text')
+                    #     message_email = get_email_from_project1(UID)
+                    #     send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
 
                     if response.status_code == 200:
                         # Если запрос успешен, возвращаем сообщение об успешном обновлении
@@ -180,23 +179,23 @@ class NotificationToUserAPIView(APIView):
                         # Если возникла ошибка, возвращаем соответствующий ответ
                         return Response({'error': f'Failed to update data for object with id={UID} in Project 1'}, status=status.HTTP_400_BAD_REQUEST)
                 
-                elif message_to_vk == "true":
-                    # Отправляем сообщение в VK
-                    account_vk = get_vk_id_from_project1(UID)
-                    message_text = data.get('text')
-                    send_message_vk(account_vk, message_text)
+                # elif message_to_vk == "true":
+                #     # Отправляем сообщение в VK
+                #     account_vk = get_vk_id_from_project1(UID)
+                #     message_text = data.get('text')
+                #     send_message_vk(account_vk, message_text)
 
-                    if message_to_email == "true":
-                        # Отправляем сообщение по электронной почте
-                        message_text = data.get('text')
-                        message_email = get_email_from_project1(UID)
-                        send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+                #     if message_to_email == "true":
+                #         # Отправляем сообщение по электронной почте
+                #         message_text = data.get('text')
+                #         message_email = get_email_from_project1(UID)
+                #         send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
                 
-                elif message_to_email == "true":
-                    # Отправляем сообщение по электронной почте
-                    message_text = data.get('text')
-                    message_email = get_email_from_project1(UID)
-                    send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+                # elif message_to_email == "true":
+                #     # Отправляем сообщение по электронной почте
+                #     message_text = data.get('text')
+                #     message_email = get_email_from_project1(UID)
+                #     send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
 
 
                 return Response({"message": "Данные успешно обработаны (Для всех)"}, status=status.HTTP_200_OK)
