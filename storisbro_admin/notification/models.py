@@ -17,7 +17,7 @@ class Notification(models.Model):
 #     status = models.CharField(max_length=50, verbose_name="Статус уведомления")
 
 class HistoryNotifications(models.Model):
-    UID = models.CharField(max_length=150, verbose_name="UID пользователя")
+    UID = models.CharField(max_length=150, verbose_name="UID пользователя", blank=True, null=True)
     title = models.CharField(max_length=250, verbose_name="Тема уведомления", null=True)
     text = models.TextField(verbose_name="Содержание уведомления")
     created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
