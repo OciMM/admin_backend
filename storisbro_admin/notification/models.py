@@ -21,6 +21,7 @@ class HistoryNotifications(models.Model):
     title = models.CharField(max_length=250, verbose_name="Тема уведомления", null=True)
     text = models.TextField(verbose_name="Содержание уведомления")
     created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
+    file = models.FileField(verbose_name="Файл для уведомления", upload_to='files', blank=True, null=True)
     # start = models.DateTimeField(verbose_name="Дата отправки", blank=True)
     # status = models.ForeignKey(StatusNotification, on_delete=models.CASCADE)
 
