@@ -79,6 +79,7 @@ class NotificationToUserAPIView(APIView):
                         "user": UID,
                         "title": request.data['title'],
                         "message": request.data['text'],
+                        "file": request.data['file']
                     }
 
                     # URL для отправки POST запроса к API проекта №1
@@ -133,6 +134,7 @@ class NotificationToUserAPIView(APIView):
                     data_to_update = {
                         "title": request.data['title'],
                         "message": request.data['text'],
+                        "file": request.data['file']
                     }
 
                     # URL для отправки POST запроса к API проекта №1
