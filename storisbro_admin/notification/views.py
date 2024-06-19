@@ -53,7 +53,7 @@ class NotificationToUserAPIView(APIView):
             # Сохраняем данные
             serializer.save()
             
-            UID = data.get('UID') if 'UID' in data else None
+            UID = data.get('UID')
 
             def get_vk_id_from_project1(uid):
                 url = f'http://31.129.96.225/api/notification/send-notification/vk_and_email/{uid}/'
@@ -77,52 +77,36 @@ class NotificationToUserAPIView(APIView):
                     # Получаем данные для обновления из запроса
                     data_to_update = {
                         "user": UID,
-                        "title": request.data['title'],
-                        "message": request.data['text'],
+                        "title": request.data.get('title'),
+                        "message": request.data.get('text'),
                     }
 
                     # URL для отправки POST запроса к API проекта №1
-                    url_project1_api = f'http://31.129.96.225/api/notification/send-notification/message/'
+                    url_project1_api = 'http://31.129.96.225/api/notification/send-notification/message/'
 
                     # Отправка POST запроса к API проекта №1
                     response = requests.post(url_project1_api, data=data_to_update)
+                    response_data = response.json()
+                    if response.status_code == 200:
+                        # Если запрос успешен, возвращаем сообщение об успешном обновлении
+                        return Response({'message': f'Data updated successfully for object with id={UID} in Project 1', 'response_data': response_data})
+                    else:
+                        # Если возникла ошибка, возвращаем соответствующий ответ
+                        return Response({'error': f'Failed to update data for object with id={UID} in Project 1', 'response_data': response_data}, status=status.HTTP_400_BAD_REQUEST)
 
-                    if message_to_vk == "true":
-                        # Отправляем сообщение в VK
-                        account_vk = get_vk_id_from_project1(UID)
+                if message_to_vk == "true":
+                    # Отправляем сообщение в VK
+                    account_vk = get_vk_id_from_project1(UID)
+                    if account_vk:
                         message_text = data.get('text')
                         send_message_vk(account_vk, message_text)
 
-                    if message_to_email == "true":
-                        # Отправляем сообщение по электронной почте
-                        message_text = data.get('text')
-                        message_email = get_email_from_project1(UID)
-                        send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
-
-                    if response.status_code == 200:
-                        # Если запрос успешен, возвращаем сообщение об успешном обновлении
-                        return Response({'message': f'Data updated successfully for object with id={UID} in Project 1'})
-                    else:
-                        # Если возникла ошибка, возвращаем соответствующий ответ
-                        return Response({'error': f'Failed to update data for object with id={UID} in Project 1'}, status=status.HTTP_400_BAD_REQUEST)
-                
-                elif message_to_vk == "true":
-                    # Отправляем сообщение в VK
-                    account_vk = get_vk_id_from_project1(UID)
-                    message_text = data.get('text')
-                    send_message_vk(account_vk, message_text)
-
-                    if message_to_email == "true":
-                        # Отправляем сообщение по электронной почте
-                        message_text = data.get('text')
-                        message_email = get_email_from_project1(UID)
-                        send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
-                
-                elif message_to_email == "true":
+                if message_to_email == "true":
                     # Отправляем сообщение по электронной почте
                     message_text = data.get('text')
                     message_email = get_email_from_project1(UID)
-                    send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
+                    if message_email:
+                        send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
 
                 return Response({"message": "Данные успешно обработаны"}, status=status.HTTP_200_OK)
             
@@ -131,40 +115,28 @@ class NotificationToUserAPIView(APIView):
                 if message_to_user == "true":
                     # Получаем данные для обновления из запроса
                     data_to_update = {
-                        "title": request.data['title'],
-                        "message": request.data['text'],
+                        "title": request.data.get('title'),
+                        "message": request.data.get('text'),
                     }
 
                     # URL для отправки POST запроса к API проекта №1
-                    url_project1_api = f'http://31.129.96.225/api/notification/send-notification/message/'
+                    url_project1_api = 'http://31.129.96.225/api/notification/send-notification/message/'
 
                     # Отправка POST запроса к API проекта №1
                     response = requests.post(url_project1_api, data=data_to_update)
-
+                    response_data = response.json()
                     if response.status_code == 200:
                         # Если запрос успешен, возвращаем сообщение об успешном обновлении
-                        return Response({'message': 'Data updated successfully for all objects in Project 1'})
+                        return Response({'message': 'Data updated successfully for all objects in Project 1', 'response_data': response_data})
                     else:
                         # Если возникла ошибка, возвращаем соответствующий ответ
-                        return Response({'error': 'Failed to update data for all objects in Project 1'}, status=status.HTTP_400_BAD_REQUEST)
+                        return Response({'error': 'Failed to update data for all objects in Project 1', 'response_data': response_data}, status=status.HTTP_400_BAD_REQUEST)
                 
-                # elif message_to_vk == "true":
-                #     # Отправляем сообщение в VK
-                #     account_vk = get_vk_id_from_project1(UID)
-                #     message_text = data.get('text')
-                #     send_message_vk(account_vk, message_text)
-
-                #     if message_to_email == "true":
-                #         # Отправляем сообщение по электронной почте
-                #         message_text = data.get('text')
-                #         message_email = get_email_from_project1(UID)
-                #         send_message_email(message_email, message_text)  # Здесь вызываем вашу функцию отправки почты
-                
-                elif message_to_email == "true":
+                if message_to_email == "true":
                     # Отправляем сообщение по электронной почте
                     message_text = data.get('text')
                     send_message_for_all_email(message_text)  # Здесь вызываем вашу функцию отправки почты
 
                 return Response({"message": "Данные успешно обработаны (Для всех)"}, status=status.HTTP_200_OK)
                 
-        return Response(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
