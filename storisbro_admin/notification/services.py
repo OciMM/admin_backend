@@ -42,7 +42,7 @@ def send_message_email(email, text):
     message = text
     email_sender = 'bekasovmaks20@gmail.com'
     
-    return send_mail(subject, message, email_sender, [email_receiver])
+    send_mail(subject, message, email_sender, [email_receiver])
 
 
 # Отправка сообщений на все почты:
@@ -67,7 +67,7 @@ def send_message_for_all_email(text):
     list_email = get_email_from_project1()
 
     for email_receiver in list_email:  
-        return send_mail(subject, message, email_sender, [email_receiver])
+        send_mail(subject, message, email_sender, [email_receiver])
 
 # send_message_for_all_email("Привет!")
 
