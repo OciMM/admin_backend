@@ -69,9 +69,8 @@ def send_message_for_all_email(text):
     for email_receiver in list_email:  
         send_mail(subject, message, email_sender, [email_receiver])
 
-# send_message_for_all_email("Привет!")
-
-
+send_message_for_all_email("Привет!")
+# print(get_email_from_project1())
 
 # # Отправка сообщений для всех в VK
 # def get_group_members(group_id):
