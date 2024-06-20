@@ -71,7 +71,7 @@ def send_message_for_all_email(text):
 
 send_message_for_all_email("Привет!")
 # print(get_email_from_project1())
-
+ 
 # # Отправка сообщений для всех в VK
 # def get_group_members(group_id):
 #     session = vk_api.VkApi(token=TOKEN_GROUP)
