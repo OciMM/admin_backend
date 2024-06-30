@@ -28,11 +28,12 @@ def send_message_vk(user_id, message_text):
     session = vk_api.VkApi(token=TOKEN_GROUP)
     vk = session.get_api()
 
-    int_id = get_int_id_vk(user_id=user_id)
-
-    random_id = random.getrandbits(31)
-
-    vk.messages.send(user_id=int_id, message=message_text, random_id=random_id)
+    try:
+        int_id = get_int_id_vk(user_id=user_id)
+        random_id = random.getrandbits(31)
+        vk.messages.send(user_id=int_id, message=message_text, random_id=random_id)
+    except Exception as e:
+        print(e)
 
 
 # отправка сообщений через почту
@@ -41,8 +42,10 @@ def send_message_email(email, text):
     subject = 'Предупреждение'
     message = text
     email_sender = 'bekasovmaks20@gmail.com'
-    
-    send_mail(subject, message, email_sender, [email_receiver])
+    try:
+        send_mail(subject, message, email_sender, [email_receiver])
+    except Exception as e:
+        print(e)
 
 
 # Отправка сообщений на все почты:
@@ -69,7 +72,7 @@ def send_message_for_all_email(text):
     for email_receiver in list_email:  
         send_mail(subject, message, email_sender, [email_receiver])
 
-send_message_for_all_email("Привет!")
+# send_message_for_all_email("Привет!")
 # print(get_email_from_project1())
  
 # # Отправка сообщений для всех в VK
