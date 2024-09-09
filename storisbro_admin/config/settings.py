@@ -171,8 +171,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'bekasovmaks20@gmail.com'  # Замените на свой адрес электронной почты Gmail
-EMAIL_HOST_PASSWORD = 'jhwy sfwp efkj qdjz'  # Укажите пароль от вашего Gmail аккаунта
+EMAIL_HOST_USER = ''  # Замените на свой адрес электронной почты Gmail
+EMAIL_HOST_PASSWORD = ''  # Укажите пароль от вашего Gmail аккаунта
 EMAIL_USE_TLS = True
 
 
